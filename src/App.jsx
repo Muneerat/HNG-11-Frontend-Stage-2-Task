@@ -2,6 +2,7 @@
 import {BrowserRouter as Router,Route,Routes} from "react-router-dom"
 import ProductPage from "./Pages/ProductPage"
 import Navbar from "./Components/Navbar"
+import Footer from "./Components/footer"
 
 function App() {
 
@@ -12,6 +13,7 @@ function App() {
     <Routes>
       <Route index  element={<ProductPage />} />
     </Routes>
+    <Footer />
    </Router>
   )
 }
