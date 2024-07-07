@@ -1,14 +1,16 @@
 
 import {BrowserRouter as Router,Route,Routes} from "react-router-dom"
-import './App.css'
+import ProductPage from "./Pages/ProductPage"
+import Navbar from "./Components/Navbar"
 
 function App() {
 
 
   return (
    <Router>
+   <Navbar/>
     <Routes>
-      <Route index path='/product-page' element={} />
+      <Route index  element={<ProductPage />} />
     </Routes>
    </Router>
   )
