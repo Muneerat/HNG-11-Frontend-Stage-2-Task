@@ -16,6 +16,7 @@ const productData = [
         name: 'Herschel Heritage Backpack | XL',
         price: '$200',
         image: Bag1,
+        rate: "4.5",
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus, mauris non maximus lobortis, nunc tellus semper ex, sit amet facilisis libero velit in velit.'
     },
     {

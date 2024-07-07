@@ -1,6 +1,7 @@
 import React from 'react'
 import productData from '../ProductData/ProductData'
-
+import Button from '../Components/Button'
+import Vector from '../assets/Vector.png'
 export default function ProductPage() {
   return (
     <div className='p-5 bg-[#f7f7f7] '>
@@ -23,15 +24,29 @@ export default function ProductPage() {
           </select>
         </div>
       </div>
+      <div>
       <div className='grid md:grid-cols-3 grid-cols-2 justify-items-center gap-'>
         {productData.map((product,index) => (
-          <div key={index}>
-           <img src={product.image} alt={product.name}/>
-           <p className='text-[#111111]'>{product.name}</p>
+          <div key={index} className='p-5'>
+           <img src={product.image} alt={product.name} c/>
+           <p className='text-[#111111] py-2 font-light'>{product.name}</p>
+           <div className='flex '>
+           <img src={Vector} className='p-0.5'/>
+            <p className='p-'>4.5</p>
+           </div>
            <h2 className='font-bold'>{product.price}</h2>
           </div>
         ))}
       </div>
+      <div className='flex justify-center my-6'>
+      <div>
+      <p className='text-center font-light p-1'>Showing 9 of 59</p>
+        <Button text='Show more' className=" w-60 h-10"/>
+      </div>
+      </div>
+    
+      </div>
+
     </div>
       
     </div>
