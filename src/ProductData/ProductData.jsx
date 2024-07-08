@@ -13,6 +13,7 @@ import Bag9 from '../assets/Bag9.png';
 
 const productData = [
     {
+        id: 1,
         name: 'Herschel Heritage Backpack | XL',
         price: '$200',
         image: Bag1,
@@ -20,48 +21,56 @@ const productData = [
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus, mauris non maximus lobortis, nunc tellus semper ex, sit amet facilisis libero velit in velit.'
     },
     {
+        id: 2,
         name: 'Herschel Heritage Backpack | XL',
         price: '$200',
         image: Bag2,
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus, mauris non maximus lobortis, nunc tellus semper ex, sit amet facilisis libero velit in velit.'
     },
     {
+        id: 3,
         name: 'Herschel Heritage Backpack | XL',
         price: '$200',
         image: Bag3,
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus, mauris non maximus lobortis, nunc tellus semper ex, sit amet facilisis libero velit in velit.'
     },
     {
+        id: 4,
         name: 'Herschel Heritage Backpack | XL',
         price: '$200',
         image: Bag4,
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus, mauris non maximus lobortis, nunc tellus semper ex, sit amet facilisis libero velit in velit.'
     },
     {
+        id: 5,
         name: 'Herschel Heritage Backpack | XL',
         price: '$200',
         image: Bag5,
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus, mauris non maximus lobortis, nunc tellus semper ex, sit amet facilisis libero velit in velit.'
     },
     {
+        id: 6,
         name: 'Herschel Heritage Backpack | XL',
         price: '$200',
         image: Bag6,
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus, mauris non maximus lobortis, nunc tellus semper ex, sit amet facilisis libero velit in velit.'
     },
     {
+        id: 7,
         name: 'Herschel Heritage Backpack | XL',
         price: '$200',
         image: Bag7,
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus, mauris non maximus lobortis, nunc tellus semper ex, sit amet facilisis libero velit in velit.'
     },
     {
+        id: 8,
         name: 'Herschel Heritage Backpack | XL',
         price: '$200',
         image: Bag8,
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus, mauris non maximus lobortis, nunc tellus semper ex, sit amet facilisis libero velit in velit.'
     },
     {
+        id: 9,
         name: 'Herschel Heritage Backpack | XL',
         price: '$200',
         image: Bag9,
