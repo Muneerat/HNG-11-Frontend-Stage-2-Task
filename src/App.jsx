@@ -7,6 +7,7 @@ import { AppContext } from "./Contexts/AppContent";
 import { useState } from "react";
 import Modal from "./Components/Modal";
 import { useEffect } from "react";
+import Checkout from "./Pages/checkout";
 
 function App() {
   const [cart, setCart] = useState([]);
@@ -92,6 +93,7 @@ function App() {
         <Routes>
           <Route index element={<ProductPage />} />
           <Route path="/products/:productId" element={<SingleProduct />} />
+          <Route path="/checkout" element={<Checkout />} />
         </Routes>
         <Footer />
         <Modal isOpen={modal} onRequestClose={closeModal} />

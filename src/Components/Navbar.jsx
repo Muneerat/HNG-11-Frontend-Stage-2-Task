@@ -48,7 +48,6 @@ export default function Navbar() {
             <li onClick={() => setShow(true)}>
               <a href="#">Cart {cart.length}</a>
             </li>
-           
           </ul>
           <ul className="flex gap-1 sm:hidden ">
             <li>
@@ -68,69 +67,77 @@ export default function Navbar() {
             </li>
           </ul>
           <Modal className="w-5/6  " show={show} toggleShow={setShow}>
-              <h2 className="font-normal text-2xl">Cart</h2>
-              <div>
-                <div className="grid-col-1">
-                  {cart.slice(0, 3).map((product, index) => (
-                    <div key={index} className="p-2 ">
-                      <div className="flex md:flex-row flex-col justify-between">
-                        <img
-                          src={product.image}
-                          alt={product.name}
-                          className="md:w-1/5"
-                        />
-                        <div className="w-3/6">
-                          <p className="text-[#111111] py-2 font-normal">
-                            {product.name}
-                          </p>
-                          <div className="font-light ">
-                            <p>Color : Navy blue</p>
-                            <p>Size : XL</p>
-                          </div>
-                          <h2 className="font-bold">
+            <h2 className="font-normal text-2xl">Cart</h2>
+            <div>
+              <div className="grid-col-1">
+                {cart.map((product, index) => (
+                  <div key={index} className="p-2 ">
+                    <div className="flex md:flex-row flex-col justify-between">
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="md:w-1/5"
+                      />
+                      <div className="w-3/6">
+                        <p className="text-[#111111] py-2 font-normal">
+                          {product.name}
+                        </p>
+                        <div className="font-light ">
+                          <p>Color : Navy blue</p>
+                          <p>Size : XL</p>
+                        </div>
+                        <h2 className="font-bold">
                           ${(product?.price * product?.amount).toFixed(2)}
-                          </h2>
-                        </div>
-                        <div className=" my-auto m">
-                          <button
-                            onClick={() => decreaseItem(product.id)}
-                            className="border py-1 px-3"
-                          >
-                            -
-                          </button>
-                          <button className="border py-1 px-3">
-                            {product.amount}
-                          </button>
-                          <button
-                            onClick={() => increaseItem(product.id)}
-                            className="border py-1 px-3"
-                          >
-                            +
-                          </button>
-                        </div>
+                        </h2>
                       </div>
-                      <div>
-                        <div
-                          className=" cursor-pointer font-light underline"
-                          onClick={() => removeItem(product.id)}
+                      <div className=" my-auto m">
+                        <button
+                          onClick={() => decreaseItem(product.id)}
+                          className="border py-1 px-3"
                         >
-                          Remove Item
-                        </div>
+                          -
+                        </button>
+                        <button className="border py-1 px-3">
+                          {product.amount}
+                        </button>
+                        <button
+                          onClick={() => increaseItem(product.id)}
+                          className="border py-1 px-3"
+                        >
+                          +
+                        </button>
                       </div>
                     </div>
-                  ))}
-                  <div className="flex flex-col gap-y-3 py-4 mt-4">
-                    <div className="flex w-full justify-between justify-items-center">
-                      <div className="uppercase font-semibold">
-                        <span className="mr-2">Total:</span>$
-                        {totalPrice.toFixed(2)}
+                    <div>
+                      <div
+                        className=" cursor-pointer font-light underline"
+                        onClick={() => removeItem(product.id)}
+                      >
+                        Remove Item
                       </div>
                     </div>
-                    <Button text='Checkout' className='text-xl'/>
                   </div>
+                ))}
+                <div className="flex flex-col gap-y-3 py-4 mt-4">
+                  <div className=" w-full justify-between justify-items-center">
+                    <div className="uppercase font-semibold flex justify-between py-2">
+                      <h2 className="mr-2">Subtotal:</h2>${totalPrice}
+                    </div>
+                    <div className="uppercase font-semibold flex justify-between py-2">
+                      <span className="mr-2">Tax:</span>$5
+                    </div>
+                    <div className="uppercase font-semibold flex justify-between py-2">
+                      <span className="mr-2">Total:</span>${5 + totalPrice}
+                    </div>
+                  </div>
+                  <Link to='/checkout' >
+                  hello
+                  {/* <Button text="Checkout" className="text-xl" /> */}
+                  </Link>
                 </div>
               </div>
-            </Modal>
+            </div>
+          </Modal>
         </div>
       </div>
     </div>

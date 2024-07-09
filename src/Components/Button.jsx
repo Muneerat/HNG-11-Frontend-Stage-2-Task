@@ -1,10 +1,12 @@
 import React from 'react'
+import { Children } from 'react'
 
 export default function Button({
     width,
     height,
     className,
     text,
+    children,
     ...props
 }) {
   return (
@@ -12,6 +14,7 @@ export default function Button({
     {...props}
     >
         {text}
+        {children}
     </button>
   )
 }
