@@ -130,10 +130,12 @@ export default function Navbar() {
                       <span className="mr-2">Total:</span>${5 + totalPrice}
                     </div>
                   </div>
-                  <Link to='/checkout' >
-                  hello
-                  {/* <Button text="Checkout" className="text-xl" /> */}
-                  </Link>
+                  
+                  
+                  <Button text="" className="text-xl" >
+                  <Link to='/checkout' >Checkout</Link>
+                  </Button>
+                
                 </div>
               </div>
             </div>
