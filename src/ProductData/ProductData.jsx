@@ -22,57 +22,57 @@ const productData = [
     },
     {
         id: 2,
-        name: 'Herschel Heritage Backpack | XL',
-        price: '$200',
+        name: 'Little America Backpack | Premium Classics - 30L',
+        price: '$245',
         image: Bag2,
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus, mauris non maximus lobortis, nunc tellus semper ex, sit amet facilisis libero velit in velit.'
     },
     {
         id: 3,
-        name: 'Herschel Heritage Backpack | XL',
-        price: '$200',
+        name: 'Retreat™ Backpack - 23L',
+        price: '$300',
         image: Bag3,
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus, mauris non maximus lobortis, nunc tellus semper ex, sit amet facilisis libero velit in velit.'
     },
     {
         id: 4,
-        name: 'Herschel Heritage Backpack | XL',
-        price: '$200',
+        name: 'Kaslo Backpack | Tech -30L',
+        price: '$320',
         image: Bag4,
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus, mauris non maximus lobortis, nunc tellus semper ex, sit amet facilisis libero velit in velit.'
     },
     {
         id: 5,
-        name: 'Herschel Heritage Backpack | XL',
-        price: '$200',
+        name: 'Kaslo Backpack | Sch -30L',
+        price: '$240',
         image: Bag5,
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus, mauris non maximus lobortis, nunc tellus semper ex, sit amet facilisis libero velit in velit.'
     },
     {
         id: 6,
-        name: 'Herschel Heritage Backpack | XL',
-        price: '$200',
+        name: 'Little America Backpack | Sch -30L',
+        price: '$130',
         image: Bag6,
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus, mauris non maximus lobortis, nunc tellus semper ex, sit amet facilisis libero velit in velit.'
     },
     {
         id: 7,
-        name: 'Herschel Heritage Backpack | XL',
+        name: 'Little America Backpack | Classics - 30L',
         price: '$200',
         image: Bag7,
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus, mauris non maximus lobortis, nunc tellus semper ex, sit amet facilisis libero velit in velit.'
     },
     {
         id: 8,
-        name: 'Herschel Heritage Backpack | XL',
-        price: '$200',
+        name: 'Kaslo Backpack | Sch -XL',
+        price: '$245',
         image: Bag8,
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus, mauris non maximus lobortis, nunc tellus semper ex, sit amet facilisis libero velit in velit.'
     },
     {
         id: 9,
-        name: 'Herschel Heritage Backpack | XL',
-        price: '$200',
+        name: 'Cosmos Backpack | Travel -30L',
+        price: '$400',
         image: Bag9,
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus, mauris non maximus lobortis, nunc tellus semper ex, sit amet facilisis libero velit in velit.'
     },

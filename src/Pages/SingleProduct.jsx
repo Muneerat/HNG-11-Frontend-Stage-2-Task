@@ -8,9 +8,15 @@ import small4 from "../assets/small4.png";
 import small5 from "../assets/small5.png";
 import Vector from "../assets/Vector.png";
 import Button from "../Components/Button";
-import { ArrowDown, ArrowUp } from "../assets/image";
+import { ArrowDown, ArrowUp, Avatar } from "../assets/image";
+import Avatars from "../assets/AvatarImage.png";
+import { AppContext } from "../Contexts/AppContent";
+import { useContext } from "react";
+// import { AppContext } from "../Contexts/AppContent";
 
 export default function SingleProductPage() {
+   const { addToCart } = useContext(AppContext);
+  // const [cart, setCart] = useState([]);
   const { productId } = useParams();
   const product = productData.find((p) => p.id === parseInt(productId));
   const [showDescription, setShowDescription] = useState(false);
@@ -25,11 +31,12 @@ export default function SingleProductPage() {
   const toggleSize = () => {
     setShowSize(!showSize);
   };
-  const [activeTab, setActiveTab] = useState("warranty");
+  const [activeTab, setActiveTab] = useState("shipping");
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
+
 
   return (
     <div className="p-5 bg-[#f7f7f7] ">
@@ -51,8 +58,6 @@ export default function SingleProductPage() {
               <h1 className="text-3xl font-light py-1 text-[#111111]">
                 {product.name}
               </h1>
-              {/* <p className='text-[#525151] py-2'>{product.description}</p> */}
-
               <h2 className="font-bold text-3xl py-2">{product.price}</h2>
               <div className="flex">
                 <img src={Vector} className="pr-0.5 py-0.5" />
@@ -64,10 +69,14 @@ export default function SingleProductPage() {
             <div>
               <p>Available Color : Black & Brown</p>
               <div className="flex gap-2 my-3">
-                <Button className="p-3 w-60 h-10" text="Add to Cart $200" />
+                <Button
+                  className="p-3 w-60 h-10 bg0"
+                  text={`Add to Cart  ${product.price}`}
+                  onClick={() => addToCart(product)}
+                />
                 <Button
                   className="p-3 w-60 h-10 bg-white text-black border-black border"
-                  text="Buy Now $200"
+                  text={`Buy Now ${product.price}`}
                 />
               </div>
               <div>
@@ -180,25 +189,83 @@ export default function SingleProductPage() {
           <h2 className="text-2xl font-light">Things you might like</h2>
           <div className="grid md:grid-cols-3 grid-col-1">
             {productData.slice(0, 3).map((product, index) => (
-              <div key={index} className="p-5">
-                <img src={product.image} alt={product.name} c />
-                <p className="text-[#111111] py-2 font-light">{product.name}</p>
-                <div className="flex ">
-                  <img src={Vector} className="pr-0.5 py-0.5" />
-                  <p className="p-">4.5</p>
+              <Link to={`/products/${product.id}`}>
+                <div key={index} className="p-5">
+                  <img src={product.image} alt={product.name} c />
+                  <p className="text-[#111111] py-2 font-light">
+                    {product.name}
+                  </p>
+                  <div className="flex ">
+                    <img src={Vector} className="pr-0.5 py-0.5" />
+                    <p className="p-">4.5</p>
+                  </div>
+                  <h2 className="font-bold">{product.price}</h2>
                 </div>
-                <h2 className="font-bold">{product.price}</h2>
-              </div>
+              </Link>
             ))}
           </div>
-          <div className="flex justify-cente justify-end my-6">
+          <div className="flex justify-end my-6">
             <div>
               <p className="text-center font-light p-1">Showing 9 of 59</p>
-              <Link to='/'>
+              <Link to="/">
                 <Button text="Show more" className=" w-60 h-10" />
               </Link>
             </div>
           </div>
+        </div>
+        <div>
+          <h2 className="text-3xl font-normal">Reviews</h2>
+          <p className="py-2">Read what people has to say about this product</p>
+          <div className="flex sm:flex-row">
+            <div className="py-6 pr-6">
+              <div className="flex py-2 ">
+                <img src={Vector} className="pr-0.5 py-0.5" />
+                <img src={Vector} className="pr-0.5 py-0.5" />
+                <img src={Vector} className="pr-0.5 py-0.5" />
+                <img src={Vector} className="pr-0.5 py-0.5" />
+                <img src={Vector} className="pr-0.5 py-0.5" />
+              </div>
+              <h2 className="font-bold py-2">Excellent</h2>
+              <p className="text-[#525151]">
+                I downsized my purse recently and this mini Herschel backpack
+                has been a lifesaver! It's the perfect in-between size for me.
+                Now I can ditch the bulky bag but still carry all my essentials
+                - phone, wallet, keys, and even a good book for the train ride
+                home. The magnetic clasp on the front pocket is a game-changer.
+              </p>
+              <div className="flex py-3">
+                <img src={Avatars} alt="" className="py- w-10" />
+                <p className="p-2 flex justify-center items-center">
+                  James Jackson
+                </p>
+              </div>
+            </div>
+            <div className="py-6">
+              <div className="flex py-2">
+                <img src={Vector} className="pr-0.5 py-0.5" />
+                <img src={Vector} className="pr-0.5 py-0.5" />
+                <img src={Vector} className="pr-0.5 py-0.5" />
+                <img src={Vector} className="pr-0.5 py-0.5" />
+                <img src={Vector} className="pr-0.5 py-0.5" />
+              </div>
+              <h2 className="font-bold py-2">Excellent</h2>
+              <p className="text-[#525151]">
+                Let's be honest, this mini backpack is adorable! I snagged it
+                for weekend adventures and errands, and it's become my new
+                go-to. The quality feels amazing - the material is super durable
+                and the stitching is top-notch. The comfy, padded straps are a
+                huge plus, especially when the farmer's market haul gets a
+                little heavy.
+              </p>
+              <div className="flex py-3">
+                <img src={Avatars} alt="" className="py- w-10" />
+                <p className="p-2 flex justify-center items-center">
+                  James Jackson
+                </p>
+              </div>
+            </div>
+          </div>
+          <Button text="Drop a review" className="w-60" />
         </div>
       </div>
     </div>

@@ -3,12 +3,14 @@ import React from 'react'
 export default function Button({
     width,
     height,
-    backgroundColor,
     className,
     text,
+    ...props
 }) {
   return (
-    <button  className={` bg-black text-white py-3 text-center flex items-center  justify-center ${className}`}>
+    <button  className={`${className} bg-black text-white py-3 text-center flex items-center  justify-center `}
+    {...props}
+    >
         {text}
     </button>
   )
