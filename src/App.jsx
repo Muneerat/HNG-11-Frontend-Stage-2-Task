@@ -5,10 +5,14 @@ import Footer from "./Components/footer";
 import SingleProduct from "./Pages/SingleProduct";
 import { AppContext } from "./Contexts/AppContent";
 import { useState } from "react";
+import Modal from "./Components/Modal";
+import { useEffect } from "react";
 
 function App() {
   const [cart, setCart] = useState([]);
   const [modal,setModal] = useState(false);
+  const [totalItems, setTotalItems] = useState();
+  const [totalPrice, setTotalPrice] = useState(0); 
 
   //Add to cart
   const addToCart = (product) => {
@@ -28,12 +32,61 @@ function App() {
     setModal(true)
   };
 
+    // Increment the quantity
+    const increaseItem = (id) => {
+      const newCart = [...cart].map((item) => {
+        if (item.id === id) {
+          return {...item, amount: item.amount + 1 };
+        } else {
+          return item;
+        }
+      });
+   
+      setCart(newCart);
+    };
+  
+    //Decrement the quantity
+    const decreaseItem = (id) => {
+     const cartItem = cart.find((item) => {
+       return item.id === id;
+     })
+     if(cartItem){
+      const newCart = [...cart].map((item) => {
+        if (item.id === id) {
+          return {...item, amount: item.amount - 1 };
+        } else {
+          return item;
+        }
+      });
+      setCart(newCart);
+     
+  
+    }
+      if (cartItem.amount < 2) {
+         removeItem(id);
+      }
+    };
+  
+    //Remove the item from cart
+    const removeItem = (id) => {
+      let updatedCart = cart.filter((prod) => prod.id !== id );
+      setCart(updatedCart)
+    }
+
   const closeModal = () => {
     setModal(false);
   }
+  useEffect(() => {
+    if(cart){
+      const totalPrice = cart.reduce((accumulator, currentItem) =>{
+        return accumulator + (currentItem.amount * currentItem.price)
+      },0)
+      setTotalPrice(totalPrice);
+    }
+   })
 
   return (
-    <AppContext.Provider value={{ cart, setCart, addToCart }}>
+    <AppContext.Provider value={{ cart, setCart, addToCart,increaseItem,decreaseItem,removeItem,totalPrice }}>
       <Router>
         <Navbar />
         <Routes>
@@ -41,6 +94,7 @@ function App() {
           <Route path="/products/:productId" element={<SingleProduct />} />
         </Routes>
         <Footer />
+        <Modal isOpen={modal} onRequestClose={closeModal} />
       </Router>
     </AppContext.Provider>
   );

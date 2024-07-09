@@ -58,7 +58,7 @@ export default function SingleProductPage() {
               <h1 className="text-3xl font-light py-1 text-[#111111]">
                 {product.name}
               </h1>
-              <h2 className="font-bold text-3xl py-2">{product.price}</h2>
+              <h2 className="font-bold text-3xl py-2">${product.price}</h2>
               <div className="flex">
                 <img src={Vector} className="pr-0.5 py-0.5" />
                 <p className="p-">4.5</p>
@@ -199,7 +199,7 @@ export default function SingleProductPage() {
                     <img src={Vector} className="pr-0.5 py-0.5" />
                     <p className="p-">4.5</p>
                   </div>
-                  <h2 className="font-bold">{product.price}</h2>
+                  <h2 className="font-bold">${product.price}</h2>
                 </div>
               </Link>
             ))}
