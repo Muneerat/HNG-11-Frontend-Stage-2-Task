@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import productData from "../ProductData/ProductData";
 import small1 from "../assets/small1.png";
@@ -11,34 +11,55 @@ import Button from "../Components/Button";
 import { ArrowDown, ArrowUp, Avatar } from "../assets/image";
 import Avatars from "../assets/AvatarImage.png";
 import { AppContext } from "../Contexts/AppContent";
-import { useContext } from "react";
 import axios from "axios";
-// import { AppContext } from "../Contexts/AppContent";
 
 export default function SingleProductPage() {
-   const { addToCart,ourProducts } = useContext(AppContext); 
-  // const [cart, setCart] = useState([]);
+  const { addToCart } = useContext(AppContext); 
   const { productId } = useParams();
   const product = productData.find((p) => p.id === parseInt(productId));
   const [showDescription, setShowDescription] = useState(false);
   const [showSize, setShowSize] = useState(false);
+  const [ourProductsRandom, setOurProductsRandom] = useState([]);
+  const [activeTab, setActiveTab] = useState("shipping");
   const BASE_IMAGE_URL = "https://api.timbu.cloud/images/";
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const getAllProductsRandom = async () => {
+      try {
+        const res = await axios.get(
+          '/api/products?organization_id=ca160a0e46ef45629d00af5bd90d171d&reverse_sort=false&Appid=07TLEUQ2D3YFVA5&Apikey=de6901e57cc24c2fbf3d5a91298951ec20240712140603058514'
+        );
+        if (res.data && res.data.items) {
+          const shuffledProducts = shuffleArray(res.data.items);
+          setOurProductsRandom(shuffledProducts);
+        } else {
+          console.error('Unexpected response structure:', res.data);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getAllProductsRandom();
+  }, []);
 
   if (!product) {
     return <div>Product not found</div>;
   }
+
   const toggleDescription = () => {
     setShowDescription(!showDescription);
   };
+
   const toggleSize = () => {
     setShowSize(!showSize);
   };
-  const [activeTab, setActiveTab] = useState("shipping");
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
+
   function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -47,29 +68,6 @@ export default function SingleProductPage() {
     return array;
   }
 
-  const [ourProductsRandom, setOurProductsRandom] = useState([]); 
-
-  const getAllProductsRandom = () => {
-    axios
-      .get(
-        '/api/products?organization_id=ca160a0e46ef45629d00af5bd90d171d&reverse_sort=false&Appid=07TLEUQ2D3YFVA5&Apikey=de6901e57cc24c2fbf3d5a91298951ec20240712140603058514'
-      )
-      .then((res) => {
-        if (res.data && res.data.items) {
-          const shuffledProducts = shuffleArray(res.data.items);
-          setOurProductsRandom(shuffledProducts);
-        } else {
-          console.error('Unexpected response structure:', res.data);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  useEffect(() => {
-    getAllProductsRandom();
-  }, []);
   const handleProductClick = (productId) => {
     const shuffledProducts = shuffleArray([...ourProductsRandom]);
     setOurProductsRandom(shuffledProducts);
@@ -83,7 +81,7 @@ export default function SingleProductPage() {
           <div>
             <img src={product.image} alt={product.name} className="m- w-full" />
           </div>
-          <div className="flex sm:flex-col m-1">
+          <div className="flex md:flex-col m-1">
             <img src={small1} alt={product.name} className="w-20 py-1" />
             <img src={small2} alt={product.name} className="w-20 py-1" />
             <img src={small3} alt={product.name} className="w-20 py-1" />
@@ -93,10 +91,11 @@ export default function SingleProductPage() {
           <div className="sm:w-3/6">
             <div className="mb-5">
               <span className="text-[#525151]">Shop/Heritage</span>
-              <h1 className="text-3xl font-light py-1 text-[#111111]">
+              <h1 className="md:text-3xl text-2xl font-light py-1 text-[#111111]">
                 {product.name}
               </h1>
               <h2 className="font-bold text-3xl py-2">${product.price}</h2>
+              <p className="">{product.description}</p>
               <div className="flex">
                 <img src={Vector} className="pr-0.5 py-0.5" />
                 <p className="p-">4.5</p>
@@ -106,14 +105,14 @@ export default function SingleProductPage() {
             <div className="w-full h-0.5 bg-[#d9d9d9] my-3"></div>
             <div>
               <p>Available Color : Black & Brown</p>
-              <div className="flex gap-2 my-3">
+              <div className="flex flex-col md:flex-row gap-2 my-3">
                 <Button
-                  className="p-3 w-60 h-10 bg0"
+                  className="p-3 md:w-60 h-10 bg0"
                   text={`Add to Cart  ${product.price}`}
                   onClick={() => addToCart(product)}
                 />
                 <Button
-                  className="p-3 w-60 h-10 bg-white text-black border-black border"
+                  className="p-3 md:w-60 h-10 bg-white text-black border-black border"
                   text={`Buy Now ${product.price}`}
                 />
               </div>
@@ -135,9 +134,10 @@ export default function SingleProductPage() {
               </div>
               {showDescription && (
                 <div className="text-[#525151] ">
-                  <p className="">Size and Detail</p>
+                <p className="">{product.description}</p>
+                  {/* <p className="">Size and Detail</p>
                   <p>Stay Hydrated With Herschel Drinkware</p>
-                  <p>Water Bottle Insulated 18oz/530ml $25.00</p>
+                  <p>Water Bottle Insulated 18oz/530ml $25.00</p> */}
                 </div>
               )}
             </div>
@@ -227,8 +227,8 @@ export default function SingleProductPage() {
           <h2 className="text-2xl font-light">Things you might like</h2>
           <div className="grid md:grid-cols-3 grid-col-1">
             {ourProductsRandom.slice(0, 3).map((product) => (
-              <Link to={`/products/${product.unique_id}`}  onClick={() => handleProductClick(product.unique_id)}>
-                <div key={product.unique_id} className="p-5">
+              <Link to={`/products/${product.unique_id}`}  onClick={() => handleProductClick(product.id) } key={product.unique_id}>
+                <div  className="p-5">
                 {product.photos &&
                       product.photos[0] &&
                       product.photos[0].url && (
@@ -262,7 +262,7 @@ export default function SingleProductPage() {
         <div>
           <h2 className="text-3xl font-normal">Reviews</h2>
           <p className="py-2">Read what people has to say about this product</p>
-          <div className="flex sm:flex-row">
+          <div className="flex sm:flex-row flex-col">
             <div className="py-6 pr-6">
               <div className="flex py-2 ">
                 <img src={Vector} className="pr-0.5 py-0.5" />

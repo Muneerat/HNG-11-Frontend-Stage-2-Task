@@ -10,18 +10,18 @@ export default function Checkout() {
   const { cart, increaseItem, decreaseItem, removeItem, totalPrice } =
     useContext(AppContext);
   return (
-    <div className="flex m-6 flex-col md:flex-row ">
+    <div className="flex p-6 flex-col md:flex-row pt-32 bg-[#f7f7f7]">
       <div className="p-4">
         <p className="py-2 text-2xl">Express checkout</p>
 
-        <div className="flex">
-          <Button className="w-64 bg-[#FFC43A] text-[#253B80]">
+        <div className="md:flex flex-row">
+          <Button className="w-64 bg-[#FFC43A] text-[#253B80] m-2">
             <p className="pr-1">Buy with </p> <PalPay width={45} height={30} />
           </Button>
-          <Button className="w-64 mx-3 ">
+          <Button className="w-64 m-2 ">
             <p className="pr-1">Buy with </p> <Iphone width={45} height={30} />
           </Button>
-          <Button className="w-64">
+          <Button className="w-64 m-2">
             <p className="pr-1">Buy with </p> <Goggle width={45} height={30} />
           </Button>
         </div>

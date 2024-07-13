@@ -15,6 +15,7 @@ function App() {
   const [modal, setModal] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0);
   const [ourProducts, setOurProducts] = useState([]);
+  // const API_KEY = process.env.API_KEY;
   
   const BASE_IMAGE_URL = "https://api.timbu.cloud/images/";
 

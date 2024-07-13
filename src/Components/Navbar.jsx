@@ -18,7 +18,7 @@ export default function Navbar() {
     navigate("/checkout");
   };
   return (
-    <div className=" fixed w-full z-10">
+    <div className=" fixed w-full z-10 shadow-md top-0">
       <div className="bg-[#EEEBD0] px-2 py-3 text-center">
         <p>20% off when you sign up to email</p>
       </div>
@@ -45,12 +45,7 @@ export default function Navbar() {
         </div>
         <div>
           <ul className="sm:flex gap-8 hidden ">
-            <li>
-              <a href="#">Search </a>
-            </li>
-            <li>
-              <a href="#">Account</a>
-            </li>
+            
             <li onClick={() => setShow(true)}>
               <a href="#">Cart {cart.length}</a>
             </li>
@@ -66,13 +61,13 @@ export default function Navbar() {
                 <Profile width={20} height={20} />
               </a>
             </li>
-            <li onClick={() => setShow(true)}>
-              <a href="#">
-                <Cart width={20} height={20} />
+            <li onClick={() => setShow(true)} className="flex">
+              <a href="#" className="flex">
+                <Cart width={20} height={20} />{cart.length}
               </a>
             </li>
           </ul>
-          <Modal className="w-5/6  " show={show} toggleShow={setShow}>
+          <Modal className="md:w-5/6 w-full " show={show} toggleShow={setShow}>
             <h2 className="font-normal text-2xl">Cart</h2>
             <div>
               <div className="grid-col-1">
@@ -84,7 +79,7 @@ export default function Navbar() {
                         alt={product.name}
                         className="md:w-1/5"
                       />
-                      <div className="w-3/6">
+                      <div className="md:w-3/6">
                         <p className="text-[#111111] py-2 font-normal">
                           {product.name}
                         </p>
@@ -92,8 +87,8 @@ export default function Navbar() {
                           <p>Color : Navy blue</p>
                           <p>Size : XL</p>
                         </div>
-                        <h2 className="font-bold">
-                          ${(product?.price * product?.amount).toFixed(2)}
+                        <h2 className="font-bold py-2">
+                          ${(product?.price * product?.amount)}
                         </h2>
                       </div>
                       <div className=" my-auto m">
@@ -116,7 +111,7 @@ export default function Navbar() {
                     </div>
                     <div>
                       <div
-                        className=" cursor-pointer font-light underline"
+                        className=" cursor-pointer font-light underline py-2"
                         onClick={() => removeItem(product.id)}
                       >
                         Remove Item

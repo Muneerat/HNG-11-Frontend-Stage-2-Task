@@ -39,7 +39,7 @@ export default function Modal({
   return (
     <div className="">
       {show && (
-        <div className="w-screen h-[90vh] z-50 bg-black/50 fixed left-0 top-32 flex justify-end">
+        <div className="w-screen h-[90vh] z-50 bg-black/50 fixed left-0 top-28 flex justify-end">
           <div
             className={`bg-white p-10 rounded-l max-w-2xl rounded-lg relative overflow-y-auto m- ${className}`}
             ref={modal}

@@ -1,13 +1,24 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import productData from "../ProductData/ProductData";
 import Button from "../Components/Button";
 import Vector from "../assets/Vector.png";
 import { Link } from "react-router-dom";
 import { AppContext } from "../Contexts/AppContent";
-import axios from "axios";
+
 export default function ProductPage() {
   const { ourProducts, setOurProducts } = useContext(AppContext);
   const BASE_IMAGE_URL = "https://api.timbu.cloud/images/";
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 10;
+
+
+ 
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = ourProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+
+  // Handle page change
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className="p-5 bg-[#f7f7f7] ">
@@ -36,21 +47,21 @@ export default function ProductPage() {
         </div>
         <div>
           <div className="grid md:grid-cols-3 grid-cols-2 justify-items-center gap-">
-        
-            {ourProducts.length > 0 ? (
-        ourProducts.map((product) => (
-          <Link to={`/products/${product.unique_id}`} onClick={() => {window.scroll}}>
-                  <div
-                    key={product.unique_id}
-                    className="p-5 hover:translate-x-1 transition-all ease-in-out hover:translate-y-1"
-                  >
+            {currentProducts.length > 0 ? (
+              currentProducts.map((product) => (
+                <Link
+                  to={`/products/${product.unique_id}`}
+                  onClick={() => { window.scroll(0, 0); }}
+                  key={product.unique_id}
+                >
+                  <div className="p-5 hover:translate-x-1 transition-all ease-in-out hover:translate-y-1">
                     {product.photos &&
                       product.photos[0] &&
                       product.photos[0].url && (
                         <img
                           src={`${BASE_IMAGE_URL}${product.photos[0].url}`}
                           alt={product.name}
-                          className="w-full"
+                          className="w-full  h-96"
                         />
                       )}
                     <p className="text-[#111111] py-2 font-light">
@@ -61,19 +72,32 @@ export default function ProductPage() {
                       <p className="p-">4.5</p>
                     </div>
                     <h2 className="font-bold">
-                      {product.current_price[0]["NGN"]}
+                      ${product.current_price[0]["NGN"]}
                     </h2>
                   </div>
                 </Link>
-        ))
-      ) : (
-        <p>Loading products...</p>
-      )}
+              ))
+            ) : (
+              <p>Loading products...</p>
+            )}
           </div>
           <div className="flex justify-center my-6">
             <div>
-              <p className="text-center font-light p-1">Showing 9 of 59</p>
-              <Button text="Show more" className=" w-60 h-10" />
+              <p className="text-center font-light p-1">
+                Showing {Math.min(indexOfLastProduct, ourProducts.length)} of {ourProducts.length}
+              </p>
+              <div className="flex justify-center">
+                {Array.from({ length: Math.ceil(ourProducts.length / productsPerPage) }, (_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => paginate(i + 1)}
+                    className={`px-3 py-1 mx-1 ${currentPage === i + 1 ? 'bg-black text-white' : 'bg-white text-black border'}`}
+                  >
+                    {i + 1}
+                  </button>
+                ))}
+              </div>
+              <Button text="Show more" className=" w-60 h-10 my-5" />
             </div>
           </div>
         </div>
@@ -81,5 +105,3 @@ export default function ProductPage() {
     </div>
   );
 }
-
-
