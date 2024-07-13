@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import productData from "../ProductData/ProductData";
 import small1 from "../assets/small1.png";
 import small2 from "../assets/small2.png";
@@ -12,15 +12,18 @@ import { ArrowDown, ArrowUp, Avatar } from "../assets/image";
 import Avatars from "../assets/AvatarImage.png";
 import { AppContext } from "../Contexts/AppContent";
 import { useContext } from "react";
+import axios from "axios";
 // import { AppContext } from "../Contexts/AppContent";
 
 export default function SingleProductPage() {
-   const { addToCart } = useContext(AppContext);
+   const { addToCart,ourProducts } = useContext(AppContext); 
   // const [cart, setCart] = useState([]);
   const { productId } = useParams();
   const product = productData.find((p) => p.id === parseInt(productId));
   const [showDescription, setShowDescription] = useState(false);
   const [showSize, setShowSize] = useState(false);
+  const BASE_IMAGE_URL = "https://api.timbu.cloud/images/";
+  const navigate = useNavigate();
 
   if (!product) {
     return <div>Product not found</div>;
@@ -36,10 +39,45 @@ export default function SingleProductPage() {
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
 
+  const [ourProductsRandom, setOurProductsRandom] = useState([]); 
+
+  const getAllProductsRandom = () => {
+    axios
+      .get(
+        '/api/products?organization_id=ca160a0e46ef45629d00af5bd90d171d&reverse_sort=false&Appid=07TLEUQ2D3YFVA5&Apikey=de6901e57cc24c2fbf3d5a91298951ec20240712140603058514'
+      )
+      .then((res) => {
+        if (res.data && res.data.items) {
+          const shuffledProducts = shuffleArray(res.data.items);
+          setOurProductsRandom(shuffledProducts);
+        } else {
+          console.error('Unexpected response structure:', res.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    getAllProductsRandom();
+  }, []);
+  const handleProductClick = (productId) => {
+    const shuffledProducts = shuffleArray([...ourProductsRandom]);
+    setOurProductsRandom(shuffledProducts);
+    navigate(`/products/${productId}`);
+  };
 
   return (
-    <div className="p-5 bg-[#f7f7f7] ">
+    <div className="p-5 bg-[#f7f7f7] pt-32">
       <div className="max-w- max-w-screen-2xl mx-auto">
         <div className="sm:flex justify-between p-5">
           <div>
@@ -188,10 +226,18 @@ export default function SingleProductPage() {
         <div>
           <h2 className="text-2xl font-light">Things you might like</h2>
           <div className="grid md:grid-cols-3 grid-col-1">
-            {productData.slice(0, 3).map((product, index) => (
-              <Link to={`/products/${product.id}`}>
-                <div key={index} className="p-5">
-                  <img src={product.image} alt={product.name} c />
+            {ourProductsRandom.slice(0, 3).map((product) => (
+              <Link to={`/products/${product.unique_id}`}  onClick={() => handleProductClick(product.unique_id)}>
+                <div key={product.unique_id} className="p-5">
+                {product.photos &&
+                      product.photos[0] &&
+                      product.photos[0].url && (
+                        <img
+                          src={`${BASE_IMAGE_URL}${product.photos[0].url}`}
+                          alt={product.name}
+                          className="w-full"
+                        />
+                      )}
                   <p className="text-[#111111] py-2 font-light">
                     {product.name}
                   </p>

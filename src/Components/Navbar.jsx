@@ -13,14 +13,20 @@ export default function Navbar() {
     useContext(AppContext);
   const [show, setShow] = useState(false);
   //   const currentCartItem = cart.find((item) => item.id === product.id)
+  const handleCheckout = () => {
+    setShow(false);
+    navigate("/checkout");
+  };
   return (
-    <div className="">
+    <div className=" fixed w-full z-10">
       <div className="bg-[#EEEBD0] px-2 py-3 text-center">
         <p>20% off when you sign up to email</p>
       </div>
-      <div className="flex justify-between py-4 px-5 items-center">
+      <div className="flex justify-between py-4 px-5 items-center bg-white">
         <div>
+        <a href='/'>
           <Logo width={100} height={40} />
+        </a>
         </div>
         <div>
           <ul className="flex sm:gap-4 gap-1">
@@ -130,12 +136,10 @@ export default function Navbar() {
                       <span className="mr-2">Total:</span>${5 + totalPrice}
                     </div>
                   </div>
-                  
-                  
-                  <Button text="" className="text-xl" >
-                  <Link to='/checkout' >Checkout</Link>
+
+                  <Button text="" className="text-xl" onClick={handleCheckout}>
+                    <Link to="/checkout">Checkout</Link>
                   </Button>
-                
                 </div>
               </div>
             </div>

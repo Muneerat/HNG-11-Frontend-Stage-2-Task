@@ -26,13 +26,16 @@ export default function Modal({
 
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (!modal.current.contains(e.target)) {
-        console.log("here");
+      if (modal.current && !modal.current.contains(e.target)) {
         toggleShow(false);
       }
     };
-    document.addEventListener("onClick", handleClickOutside);
-  }, [modal]);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [modal, toggleShow]);
+  
   return (
     <div className="">
       {show && (

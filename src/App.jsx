@@ -8,19 +8,44 @@ import { useState } from "react";
 import Modal from "./Components/Modal";
 import { useEffect } from "react";
 import Checkout from "./Pages/checkout";
+import axios from "axios";
 
 function App() {
   const [cart, setCart] = useState([]);
-  const [modal,setModal] = useState(false);
-  const [totalItems, setTotalItems] = useState();
-  const [totalPrice, setTotalPrice] = useState(0); 
+  const [modal, setModal] = useState(false);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [ourProducts, setOurProducts] = useState([]);
+  
+  const BASE_IMAGE_URL = "https://api.timbu.cloud/images/";
+
+
+  // Get  all items from api
+
+
+  const getAllProducts = () => {
+    axios
+      .get(
+        "/api/products?organization_id=ca160a0e46ef45629d00af5bd90d171d&reverse_sort=false&Appid=07TLEUQ2D3YFVA5&Apikey=de6901e57cc24c2fbf3d5a91298951ec20240712140603058514"
+      )
+      .then((res) => {
+        setOurProducts(res.data.items);
+        console.log(res.data.items);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    getAllProducts();
+  }, []);
 
   //Add to cart
   const addToCart = (product) => {
     const cartItem = cart.find((item) => item.id === product.id);
     if (cartItem) {
       // If the product is already in the cart, increase its quantity
-      const newCart = cart.map((item) => 
+      const newCart = cart.map((item) =>
         item.id === product.id ? { ...item, amount: item.amount + 1 } : item
       );
       setCart(newCart);
@@ -30,64 +55,74 @@ function App() {
       const newItem = { ...product, amount: 1 };
       setCart([...cart, newItem]);
     }
-    setModal(true)
+    setModal(true);
   };
 
-    // Increment the quantity
-    const increaseItem = (id) => {
-      const newCart = [...cart].map((item) => {
-        if (item.id === id) {
-          return {...item, amount: item.amount + 1 };
-        } else {
-          return item;
-        }
-      });
-   
-      setCart(newCart);
-    };
-  
-    //Decrement the quantity
-    const decreaseItem = (id) => {
-     const cartItem = cart.find((item) => {
-       return item.id === id;
-     })
-     if(cartItem){
-      const newCart = [...cart].map((item) => {
-        if (item.id === id) {
-          return {...item, amount: item.amount - 1 };
-        } else {
-          return item;
-        }
-      });
-      setCart(newCart);
-     
-  
-    }
-      if (cartItem.amount < 2) {
-         removeItem(id);
+  // Increment the quantity
+  const increaseItem = (id) => {
+    const newCart = [...cart].map((item) => {
+      if (item.id === id) {
+        return { ...item, amount: item.amount + 1 };
+      } else {
+        return item;
       }
-    };
-  
-    //Remove the item from cart
-    const removeItem = (id) => {
-      let updatedCart = cart.filter((prod) => prod.id !== id );
-      setCart(updatedCart)
+    });
+
+    setCart(newCart);
+  };
+
+  //Decrement the quantity
+  const decreaseItem = (id) => {
+    const cartItem = cart.find((item) => {
+      return item.id === id;
+    });
+    if (cartItem) {
+      const newCart = [...cart].map((item) => {
+        if (item.id === id) {
+          return { ...item, amount: item.amount - 1 };
+        } else {
+          return item;
+        }
+      });
+      setCart(newCart);
     }
+    if (cartItem.amount < 2) {
+      removeItem(id);
+    }
+  };
+
+  //Remove the item from cart
+  const removeItem = (id) => {
+    let updatedCart = cart.filter((prod) => prod.id !== id);
+    setCart(updatedCart);
+  };
 
   const closeModal = () => {
     setModal(false);
-  }
+  };
   useEffect(() => {
-    if(cart){
-      const totalPrice = cart.reduce((accumulator, currentItem) =>{
-        return accumulator + (currentItem.amount * currentItem.price)
-      },0)
+    if (cart) {
+      const totalPrice = cart.reduce((accumulator, currentItem) => {
+        return accumulator + currentItem.amount * currentItem.price;
+      }, 0);
       setTotalPrice(totalPrice);
     }
-   })
+  });
 
   return (
-    <AppContext.Provider value={{ cart, setCart, addToCart,increaseItem,decreaseItem,removeItem,totalPrice }}>
+    <AppContext.Provider
+      value={{
+        cart,
+        setCart,
+        addToCart,
+        increaseItem,
+        decreaseItem,
+        removeItem,
+        totalPrice,
+        ourProducts,
+        setOurProducts,
+      }}
+    >
       <Router>
         <Navbar />
         <Routes>
