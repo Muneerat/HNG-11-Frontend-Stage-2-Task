@@ -15,7 +15,7 @@ function App() {
   const [modal, setModal] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0);
   const [ourProducts, setOurProducts] = useState([]);
-  // const API_KEY = process.env.API_KEY;
+  // const API_KEY = process.env.VITE_API_KEY;
   
   const BASE_IMAGE_URL = "https://api.timbu.cloud/images/";
 
@@ -26,7 +26,7 @@ function App() {
   const getAllProducts = () => {
     axios
       .get(
-        "/api/products?organization_id=ca160a0e46ef45629d00af5bd90d171d&reverse_sort=false&Appid=07TLEUQ2D3YFVA5&Apikey=de6901e57cc24c2fbf3d5a91298951ec20240712140603058514"
+        `/api/products?organization_id=ca160a0e46ef45629d00af5bd90d171d&reverse_sort=false&Appid=07TLEUQ2D3YFVA5&Apikey=de6901e57cc24c2fbf3d5a91298951ec20240712140603058514`
       )
       .then((res) => {
         setOurProducts(res.data.items);
