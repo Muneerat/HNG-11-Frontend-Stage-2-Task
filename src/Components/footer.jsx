@@ -16,9 +16,9 @@ export default function Footer() {
             <BigLogo width={300} height={100}  />
             <p cl>Be the first to find out about discounts and more</p>
            
-            <div className='flex my-5'>
+            <div className='flex flex-col md:flex-row my-5'>
             <input type="text" name="" placeholder='Enter your email' className='border-b p-3' />
-            <Button className='m- w-36' text='Subscribe'/>
+            <Button className='m- w-full md:w-36' text='Subscribe'/>
             </div>
             <p>Terms & Privacy. 2024 Aurelius. All right reserved</p>
         </div>

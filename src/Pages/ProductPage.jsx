@@ -43,7 +43,7 @@ export default function ProductPage() {
           </div>
         </div>
         <div>
-          <div className="grid md:grid-cols-3 grid-cols-2 justify-items-center gap-">
+          <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 justify-items-center gap-">
             {currentProducts.length > 0 ? (
               currentProducts.map((product) => (
                 <Link
@@ -51,14 +51,14 @@ export default function ProductPage() {
                   onClick={() => { window.scroll(0, 0); }}
                   key={product.unique_id}
                 >
-                  <div className="p-5 hover:translate-x-1 transition-all ease-in-out hover:translate-y-1">
+                  <div className="p-5 transition-all ease-in-out hover:scale-105 duration-300">
                     {product.photos &&
                       product.photos[0] &&
                       product.photos[0].url && (
                         <img
                           src={`${BASE_IMAGE_URL}${product.photos[0].url}`}
                           alt={product.name}
-                          className="w-full  h-96"
+                          className="w-full sm:h-96"
                         />
                       )}
                     <p className="text-[#111111] py-2 font-light">

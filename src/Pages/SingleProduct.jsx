@@ -76,8 +76,8 @@ export default function SingleProductPage() {
     <div className="p-5 bg-[#f7f7f7] pt-36 ">
       <div className="max-w-7xl max-w-screen-2x mx-auto">
         <div
-          classNames="sm:flex justify-between p-5"
-          className="grid grid-cols-3"
+          classNames="flex flex-col md:flex-row justify-between p-5"
+          className="grid md:grid-cols-3 grid-cols-1 "
         >
           <div>
             <img
@@ -87,11 +87,11 @@ export default function SingleProductPage() {
             />
           </div>
           <div className="flex md:flex-col m-1 items-center">
-            <img src={small1} alt={product.name} className="w-20 py-1" />
-            <img src={small2} alt={product.name} className="w-20 py-1" />
-            <img src={small3} alt={product.name} className="w-20 py-1" />
-            <img src={small4} alt={product.name} className="w-20 py-1" />
-            <img src={small5} alt={product.name} className="w-20 py-1" />
+            <img src={small1} alt={product.name} className="md:w-20 w-12 py-1" />
+            <img src={small2} alt={product.name} className="md:w-20 w-12 py-1" />
+            <img src={small3} alt={product.name} className="md:w-20 w-12 py-1" />
+            <img src={small4} alt={product.name} className="md:w-20 w-12 py-1" />
+            <img src={small5} alt={product.name} className="md:w-20 w-12 py-1" />
           </div>
           <div className="sm:w-3/">
             <div className="mb-5">
@@ -113,17 +113,16 @@ export default function SingleProductPage() {
             <div>
               <p>Available Color : Black & Brown</p>
               <div className="flex flex-col md:flex-row gap-2 my-3">
-                <Button
-                  className="p-3 md:w-60 h-10 bg0"
-                  text={`Add to Cart ${product.current_price[0]["NGN"]}`}
+                  <button
+                  className={`py-3 text-center flex items-center  justify-center -3 md:w-60 h-10 bg-black text-white border-black border`}
                   onClick={() => addToCart(product)}
-                />
-                {/* <Button
-                  className="p-3 md:w-60 h-10 bg-white text-black border-black border"
-                  text={`Buy Now ${product.current_price[0]["NGN"]}`}
-                /> */}
+                >
+                  Buy Now ${product.current_price[0]["NGN"]}
+                </button>
+               
                 <button
                   className={`py-3 text-center flex items-center  justify-center -3 md:w-60 h-10 bg-white text-black border-black border`}
+                  onClick={() => addToCart(product)}
                 >
                   Buy Now ${product.current_price[0]["NGN"]}
                 </button>
@@ -147,9 +146,6 @@ export default function SingleProductPage() {
               {showDescription && (
                 <div className="text-[#525151] ">
                   <p className="">{product.description}</p>
-                  {/* <p className="">Size and Detail</p>
-                  <p>Stay Hydrated With Herschel Drinkware</p>
-                  <p>Water Bottle Insulated 18oz/530ml $25.00</p> */}
                 </div>
               )}
             </div>
