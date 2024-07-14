@@ -10,7 +10,7 @@ export default function ProductPage() {
   const BASE_IMAGE_URL = "https://api.timbu.cloud/images/";
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 10;
-  // const API_KEY = process.env.VITE_API_KEY;
+
 
  
   const indexOfLastProduct = currentPage * productsPerPage;
