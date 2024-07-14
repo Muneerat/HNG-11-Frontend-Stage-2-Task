@@ -10,9 +10,6 @@ export default function ProductPage() {
   const BASE_IMAGE_URL = "https://api.timbu.cloud/images/";
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 10;
-
-
- 
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const currentProducts = ourProducts.slice(indexOfFirstProduct, indexOfLastProduct);
