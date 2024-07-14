@@ -5,7 +5,7 @@ import { AppContext } from "../Contexts/AppContent";
 import Modal from "./Modal";
 import { useState } from "react";
 import productData from "../ProductData/ProductData";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import Button from "./Button";
 
 export default function Navbar() {
@@ -13,9 +13,11 @@ export default function Navbar() {
     useContext(AppContext);
   const [show, setShow] = useState(false);
   //   const currentCartItem = cart.find((item) => item.id === product.id)
+  const BASE_IMAGE_URL = "https://api.timbu.cloud/images/";
+
   const handleCheckout = () => {
     setShow(false);
-    navigate("/checkout");
+    Navigate("/checkout"); 
   };
   return (
     <div className=" fixed w-full z-10 shadow-md top-0">
@@ -24,9 +26,9 @@ export default function Navbar() {
       </div>
       <div className="flex justify-between py-4 px-5 items-center bg-white">
         <div>
-        <a href='/'>
-          <Logo width={100} height={40} />
-        </a>
+          <a href="/">
+            <Logo width={100} height={40} />
+          </a>
         </div>
         <div>
           <ul className="flex sm:gap-4 gap-1">
@@ -45,7 +47,6 @@ export default function Navbar() {
         </div>
         <div>
           <ul className="sm:flex gap-8 hidden ">
-            
             <li onClick={() => setShow(true)}>
               <a href="#">Cart {cart.length}</a>
             </li>
@@ -63,7 +64,8 @@ export default function Navbar() {
             </li>
             <li onClick={() => setShow(true)} className="flex">
               <a href="#" className="flex">
-                <Cart width={20} height={20} />{cart.length}
+                <Cart width={20} height={20} />
+                {cart.length}
               </a>
             </li>
           </ul>
@@ -75,7 +77,7 @@ export default function Navbar() {
                   <div key={index} className="p-2 ">
                     <div className="flex md:flex-row flex-col justify-between">
                       <img
-                        src={product.image}
+                        src={`${BASE_IMAGE_URL}${product.photos[0].url}`}
                         alt={product.name}
                         className="md:w-1/5"
                       />
@@ -88,8 +90,9 @@ export default function Navbar() {
                           <p>Size : XL</p>
                         </div>
                         <h2 className="font-bold py-2">
-                          ${(product?.price * product?.amount)}
+                          ${parseFloat(product.current_price[0]["NGN"]) * product.amount}
                         </h2>
+
                       </div>
                       <div className=" my-auto m">
                         <button
@@ -122,7 +125,7 @@ export default function Navbar() {
                 <div className="flex flex-col gap-y-3 py-4 mt-4">
                   <div className=" w-full justify-between justify-items-center">
                     <div className="uppercase font-semibold flex justify-between py-2">
-                      <h2 className="mr-2">Subtotal:</h2>${totalPrice}
+                      <h2 className="mr-2">Subtotal:</h2>${parseFloat(totalPrice)}
                     </div>
                     <div className="uppercase font-semibold flex justify-between py-2">
                       <span className="mr-2">Tax:</span>$5

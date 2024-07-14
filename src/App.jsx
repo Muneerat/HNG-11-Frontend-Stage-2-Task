@@ -106,7 +106,8 @@ function App() {
   useEffect(() => {
     if (cart) {
       const totalPrice = cart.reduce((accumulator, currentItem) => {
-        return accumulator + currentItem.amount * currentItem.price;
+        const itemPrice = parseFloat(currentItem.current_price[0]["NGN"]);
+        return accumulator + currentItem.amount * itemPrice;
       }, 0);
       setTotalPrice(totalPrice);
     }

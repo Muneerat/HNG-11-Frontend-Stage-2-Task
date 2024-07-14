@@ -7,6 +7,7 @@ import { useContext } from "react";
 import { AppContext } from "../Contexts/AppContent";
 
 export default function Checkout() {
+  const BASE_IMAGE_URL = "https://api.timbu.cloud/images/";
   const { cart, increaseItem, decreaseItem, removeItem, totalPrice } =
     useContext(AppContext);
   return (
@@ -81,10 +82,10 @@ export default function Checkout() {
       <div className="p-4">
         <h1>Order Summary</h1>
         {cart.map((product, index) => (
-          <div key={index} className="p-2 ">
+          <div  key={product.unique_id} className="p-2 ">
             <div className="flex md:flex-row flex-col justify-between">
               <img
-                src={product.image}
+                src={`${BASE_IMAGE_URL}${product.photos[0].url}`}
                 alt={product.name}
                 className="md:w-1/5"
               />
@@ -97,7 +98,7 @@ export default function Checkout() {
                   <p>Size : XL</p>
                 </div>
                 <h2 className="font-bold">
-                  ${(product?.price * product?.amount).toFixed(2)}
+                ${parseFloat(product.current_price[0]["NGN"]) * product.amount}
                 </h2>
               </div>
               <div className=" my-auto m">
