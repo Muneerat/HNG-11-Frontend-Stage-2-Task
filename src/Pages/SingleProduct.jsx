@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import productData from "../ProductData/ProductData";
 import small1 from "../assets/small1.png";
 import small2 from "../assets/small2.png";
 import small3 from "../assets/small3.png";
@@ -14,27 +13,30 @@ import { AppContext } from "../Contexts/AppContent";
 import axios from "axios";
 
 export default function SingleProductPage() {
-  const { addToCart } = useContext(AppContext); 
+  const { addToCart, ourProducts } = useContext(AppContext);
   const { productId } = useParams();
-  const product = productData.find((p) => p.id === parseInt(productId));
+  const product = ourProducts.find((p) => p.unique_id === productId);
   const [showDescription, setShowDescription] = useState(false);
   const [showSize, setShowSize] = useState(false);
   const [ourProductsRandom, setOurProductsRandom] = useState([]);
   const [activeTab, setActiveTab] = useState("shipping");
   const BASE_IMAGE_URL = "https://api.timbu.cloud/images/";
   const navigate = useNavigate();
+  const API_KEY = import.meta.env.VITE_API_KEY;
+  const API_ID = import.meta.env.VITE_API_ID;
+  const ORGANIZATION_ID = import.meta.env.VITE_ORGANIZATION_ID;
 
   useEffect(() => {
     const getAllProductsRandom = async () => {
       try {
         const res = await axios.get(
-          '/api/products?organization_id=ca160a0e46ef45629d00af5bd90d171d&reverse_sort=false&Appid=07TLEUQ2D3YFVA5&Apikey=de6901e57cc24c2fbf3d5a91298951ec20240712140603058514'
+          `https://api.timbu.cloud/products?organization_id=ca160a0e46ef45629d00af5bd90d171d&reverse_sort=false&Appid=${API_ID}&Apikey=${API_KEY}`
         );
         if (res.data && res.data.items) {
           const shuffledProducts = shuffleArray(res.data.items);
           setOurProductsRandom(shuffledProducts);
         } else {
-          console.error('Unexpected response structure:', res.data);
+          console.error("Unexpected response structure:", res.data);
         }
       } catch (err) {
         console.log(err);
@@ -43,10 +45,6 @@ export default function SingleProductPage() {
 
     getAllProductsRandom();
   }, []);
-
-  if (!product) {
-    return <div>Product not found</div>;
-  }
 
   const toggleDescription = () => {
     setShowDescription(!showDescription);
@@ -75,27 +73,36 @@ export default function SingleProductPage() {
   };
 
   return (
-    <div className="p-5 bg-[#f7f7f7] pt-32">
-      <div className="max-w- max-w-screen-2xl mx-auto">
-        <div className="sm:flex justify-between p-5">
+    <div className="p-5 bg-[#f7f7f7] pt-36 ">
+      <div className="max-w-7xl max-w-screen-2x mx-auto">
+        <div
+          classNames="sm:flex justify-between p-5"
+          className="grid grid-cols-3"
+        >
           <div>
-            <img src={product.image} alt={product.name} className="m- w-full" />
+            <img
+              src={`${BASE_IMAGE_URL}${product.photos[0].url}`}
+              alt={product.name}
+              className="m- w-full"
+            />
           </div>
-          <div className="flex md:flex-col m-1">
+          <div className="flex md:flex-col m-1 items-center">
             <img src={small1} alt={product.name} className="w-20 py-1" />
             <img src={small2} alt={product.name} className="w-20 py-1" />
             <img src={small3} alt={product.name} className="w-20 py-1" />
             <img src={small4} alt={product.name} className="w-20 py-1" />
             <img src={small5} alt={product.name} className="w-20 py-1" />
           </div>
-          <div className="sm:w-3/6">
+          <div className="sm:w-3/">
             <div className="mb-5">
               <span className="text-[#525151]">Shop/Heritage</span>
               <h1 className="md:text-3xl text-2xl font-light py-1 text-[#111111]">
                 {product.name}
               </h1>
-              <h2 className="font-bold text-3xl py-2">${product.price}</h2>
-              <p className="">{product.description}</p>
+              <h2 className="font-bold text-3xl py-2">
+                {" "}
+                ${product.current_price[0]["NGN"]}
+              </h2>
               <div className="flex">
                 <img src={Vector} className="pr-0.5 py-0.5" />
                 <p className="p-">4.5</p>
@@ -108,13 +115,18 @@ export default function SingleProductPage() {
               <div className="flex flex-col md:flex-row gap-2 my-3">
                 <Button
                   className="p-3 md:w-60 h-10 bg0"
-                  text={`Add to Cart  ${product.price}`}
+                  text={`Add to Cart ${product.current_price[0]["NGN"]}`}
                   onClick={() => addToCart(product)}
                 />
-                <Button
+                {/* <Button
                   className="p-3 md:w-60 h-10 bg-white text-black border-black border"
-                  text={`Buy Now ${product.price}`}
-                />
+                  text={`Buy Now ${product.current_price[0]["NGN"]}`}
+                /> */}
+                <button
+                  className={`py-3 text-center flex items-center  justify-center -3 md:w-60 h-10 bg-white text-black border-black border`}
+                >
+                  Buy Now ${product.current_price[0]["NGN"]}
+                </button>
               </div>
               <div>
                 <p className="text-center text-[#525151]">
@@ -134,7 +146,7 @@ export default function SingleProductPage() {
               </div>
               {showDescription && (
                 <div className="text-[#525151] ">
-                <p className="">{product.description}</p>
+                  <p className="">{product.description}</p>
                   {/* <p className="">Size and Detail</p>
                   <p>Stay Hydrated With Herschel Drinkware</p>
                   <p>Water Bottle Insulated 18oz/530ml $25.00</p> */}
@@ -227,17 +239,21 @@ export default function SingleProductPage() {
           <h2 className="text-2xl font-light">Things you might like</h2>
           <div className="grid md:grid-cols-3 grid-col-1">
             {ourProductsRandom.slice(0, 3).map((product) => (
-              <Link to={`/products/${product.unique_id}`}  onClick={() => handleProductClick(product.id) } key={product.unique_id}>
-                <div  className="p-5">
-                {product.photos &&
-                      product.photos[0] &&
-                      product.photos[0].url && (
-                        <img
-                          src={`${BASE_IMAGE_URL}${product.photos[0].url}`}
-                          alt={product.name}
-                          className="w-full"
-                        />
-                      )}
+              <Link
+                to={`/products/${product.unique_id}`}
+                onClick={() => handleProductClick(product.id)}
+                key={product.unique_id}
+              >
+                <div className="p-5">
+                  {product.photos &&
+                    product.photos[0] &&
+                    product.photos[0].url && (
+                      <img
+                        src={`${BASE_IMAGE_URL}${product.photos[0].url}`}
+                        alt={product.name}
+                        className="w-full h-96"
+                      />
+                    )}
                   <p className="text-[#111111] py-2 font-light">
                     {product.name}
                   </p>
@@ -245,7 +261,9 @@ export default function SingleProductPage() {
                     <img src={Vector} className="pr-0.5 py-0.5" />
                     <p className="p-">4.5</p>
                   </div>
-                  <h2 className="font-bold">${product.price}</h2>
+                  <h2 className="font-bold">
+                    ${product.current_price[0]["NGN"]}
+                  </h2>
                 </div>
               </Link>
             ))}
