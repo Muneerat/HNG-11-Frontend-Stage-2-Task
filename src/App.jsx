@@ -28,7 +28,7 @@ function App() {
   const getAllProducts = () => {
     axios
       .get(
-        `api/products?organization_id=${ORGANIZATION_ID}&reverse_sort=false&Appid=${API_ID}&Apikey=${API_KEY}`
+        `https://api.timbu.cloud/products?organization_id=${ORGANIZATION_ID}&reverse_sort=false&Appid=${API_ID}&Apikey=${API_KEY}`
       )
       .then((res) => {
         setOurProducts(res.data.items);
