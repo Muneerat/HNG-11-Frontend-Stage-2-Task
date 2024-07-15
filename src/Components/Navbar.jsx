@@ -134,9 +134,8 @@ export default function Navbar() {
                       <span className="mr-2">Total:</span>${5 + totalPrice}
                     </div>
                   </div>
-
                   <Button text="" className="text-xl" onClick={handleCheckout}>
-                    <Link to="/checkout">Checkout</Link>
+                    <Link to="/checkout" className="w-full">Checkout</Link>
                   </Button>
                 </div>
               </div>

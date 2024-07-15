@@ -264,14 +264,7 @@ export default function SingleProductPage() {
               </Link>
             ))}
           </div>
-          <div className="flex justify-end my-6">
-            <div>
-              <p className="text-center font-light p-1">Showing 9 of 59</p>
-              <Link to="/">
-                <Button text="Show more" className=" w-60 h-10" />
-              </Link>
-            </div>
-          </div>
+     
         </div>
         <div>
           <h2 className="text-3xl font-normal">Reviews</h2>
